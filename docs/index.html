@@ -413,6 +413,9 @@
     </div>
     
     <script>
+        // ایجاد المان صوتی برای افکت دانلود
+        const downloadSound = new Audio('https://abrehamrahi.ir/o/public/m4uiMqby/');
+        
         document.addEventListener('contextmenu', function(e) {
             if (e.target.closest('.logo')) {
                 e.preventDefault();
@@ -457,6 +460,9 @@
         });
 
         function downloadSticker(url, filename) {
+            // پخش افکت صوتی هنگام دانلود
+            downloadSound.play().catch(e => console.log("خطا در پخش صدا:", e));
+            
             const link = document.createElement('a');
             link.href = url;
             link.download = filename;
