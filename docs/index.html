@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👁👄👁 ...</title>
+    <title>www.🤍🤍🤍.com</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -95,7 +95,7 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 15px; /* Changed from 30px to 15px */
+            gap: 15px;
             animation: fadeIn 0.6s ease-out;
             direction: rtl;
         }
@@ -114,7 +114,7 @@
             position: relative;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            transform: scale(0.92); /* Changed to make stickers 1cm smaller again (total 2cm smaller than original) */
+            transform: scale(0.92);
         }
         
         .sticker::before {
@@ -132,7 +132,7 @@
         }
         
         .sticker:hover {
-            transform: translateY(-10px) scale(0.95); /* Adjusted hover effect to maintain proportions */
+            transform: translateY(-10px) scale(0.95);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
         
@@ -165,7 +165,6 @@
             transform: scale(1.05);
         }
 
-        /* Rest of the CSS remains exactly the same */
         .usage-guide {
             text-align: center;
             width: 100%;
@@ -347,6 +346,13 @@
             justify-content: center;
             gap: 10px;
         }
+
+        .visitor-counter {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 5px;
+            direction: rtl;
+        }
         
         @media (max-width: 900px) {
             .sticker-row {
@@ -399,7 +405,6 @@
     </style>
 </head>
 <body>
-    <!-- All HTML content remains exactly the same as before -->
     <div class="container">
         <header>
             <div class="logo">
@@ -451,7 +456,6 @@
                 </div>
             </div>
 
-            <!-- Previous new stickers -->
             <div class="sticker-row">
                 <div class="sticker" onclick="downloadSticker('https://abrehamrahi.ir/o/public/15QxJXPA/', 'sticker6.png')">
                     <div class="sticker-image">
@@ -480,7 +484,6 @@
                 </div>
             </div>
 
-            <!-- New stickers added here -->
             <div class="sticker-row">
                 <div class="sticker" onclick="downloadSticker('https://abrehamrahi.ir/o/public/zx91ijDL/', 'sticker10.png')">
                     <div class="sticker-image">
@@ -584,6 +587,7 @@
                 <img src="https://abrehamrahi.ir/o/public/Gibf4HXO/" class="webp-animation" alt="انیمیشن">
                 بیا پیش‌مون...
             </button>
+            <div class="visitor-counter" id="visitorCounter">تعداد بازدید: در حال بارگذاری...</div>
         </div>
     </div>
     
@@ -658,7 +662,24 @@
             };
 
             window.addEventListener('load', resizeStickers);
+
+            // Update visitor counter
+            updateVisitorCounter();
         });
+
+        // Simple visitor counter using localStorage
+        function updateVisitorCounter() {
+            let count = localStorage.getItem('siteVisitorCount');
+            
+            if (!count) {
+                count = 0;
+            }
+            
+            count = parseInt(count) + 1;
+            localStorage.setItem('siteVisitorCount', count);
+            
+            document.getElementById('visitorCounter').textContent = `تعداد بازدید: ${count.toLocaleString('fa-IR')}`;
+        }
 
         function downloadSticker(url, filename) {
             // پخش افکت صوتی هنگام دانلود
