@@ -21,7 +21,7 @@
       gap: 20px;
       padding-top: 40px;
       position: relative;
-      padding-bottom: 60px; /* فضای کافی برای دکمه پایین */
+      padding-bottom: 80px; /* فضای کافی برای دکمه اشتراک گذاری */
     }
     
     .digital-clock {
@@ -64,37 +64,25 @@
       pointer-events: none;
     }
 
-    /* دکمه اشتراک گذاری در پایین سمت راست */
-    .share-button {
+    /* دکمه اشتراک گذاری */
+    .share-btn {
       position: fixed;
+      left: 20px;
       bottom: 20px;
-      right: 20px;
-      background: transparent;
-      border: none;
-      color: #777; /* رنگ خاکستری */
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      cursor: pointer;
+      background-color: white;
+      color: #777;
+      padding: 10px 15px;
+      border-radius: 20px;
       text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       transition: all 0.3s;
+      z-index: 100;
     }
     
-    .share-button:hover {
-      color: #555;
-      background-color: rgba(0,0,0,0.05);
-    }
-
-    /* جلوگیری از کشیدن و رها کردن عکس */
-    .button-container::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
+    .share-btn:hover {
+      background-color: #f5f5f5;
+      transform: translateY(-2px);
     }
 
     /* استایل برای موبایل (صفحه کوچک) */
@@ -106,6 +94,12 @@
       .image-button {
         width: 120px;
         height: 120px;
+      }
+      
+      .share-btn {
+        left: 10px;
+        bottom: 10px;
+        font-size: 14px;
       }
     }
 
@@ -137,7 +131,6 @@
   <div class="digital-clock" id="clock">00:00</div>
   
   <div class="buttons-wrapper">
-    <!-- روش 1: استفاده از div با background-image به جای تگ img -->
     <a href="https://baskar-chan.github.io/Sticker.1/" class="button-container" 
        style="background-image: url('https://abrehamrahi.ir/o/public/fE7riFUc/');
               background-size: contain;
@@ -147,15 +140,14 @@
               height: 120px;">
     </a>
     
-    <!-- روش 2: استفاده از تگ img با محافظت -->
     <a href="https://baskar-chan.github.io/Sticker.2/" class="button-container">
       <img src="https://abrehamrahi.ir/o/public/rwEwZJPe/" alt="دکمه دوم" class="image-button" 
            oncontextmenu="return false;" ondragstart="return false;">
     </a>
   </div>
 
-  <!-- دکمه اشتراک گذاری جدید -->
-  <a href="https://baskar-chan.github.io/sticker/" class="share-button">
+  <!-- دکمه اشتراک گذاری -->
+  <a href="https://baskar-chan.github.io/sticker/" class="share-btn" id="shareBtn">
     منو به دوستات نشون بده
   </a>
 
@@ -181,6 +173,23 @@
       if (e.target.tagName === 'IMG') {
         e.preventDefault();
       }
+    });
+
+    // اسکریپت اشتراک گذاری
+    document.getElementById('shareBtn').addEventListener('click', function(e) {
+      if (navigator.share) {
+        e.preventDefault();
+        navigator.share({
+          title: 'این صفحه جالبه!',
+          text: 'به این صفحه نگاه کن',
+          url: 'https://baskar-chan.github.io/sticker/',
+        })
+        .catch(error => {
+          console.log('خطا در اشتراک گذاری:', error);
+          window.location.href = this.href;
+        });
+      }
+      // اگر مرورگر از share API پشتیبانی نکند، به لینک معمولی هدایت می‌شود
     });
   </script>
 </body>
