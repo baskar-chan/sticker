@@ -44,6 +44,11 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s;
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
     
     .button-container:hover {
@@ -54,6 +59,18 @@
       display: block;
       object-fit: contain;
       padding: 5px;
+      pointer-events: none;
+    }
+
+    /* جلوگیری از کشیدن و رها کردن عکس */
+    .button-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
     }
 
     /* استایل برای موبایل (صفحه کوچک) */
@@ -96,12 +113,20 @@
   <div class="digital-clock" id="clock">00:00</div>
   
   <div class="buttons-wrapper">
-    <a href="https://baskar-chan.github.io/Sticker.1/" class="button-container">
-      <img src="https://abrehamrahi.ir/o/public/fE7riFUc/" alt="دکمه اول" class="image-button">
+    <!-- روش 1: استفاده از div با background-image به جای تگ img -->
+    <a href="https://baskar-chan.github.io/Sticker.1/" class="button-container" 
+       style="background-image: url('https://abrehamrahi.ir/o/public/fE7riFUc/');
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 120px;
+              height: 120px;">
     </a>
     
+    <!-- روش 2: استفاده از تگ img با محافظت -->
     <a href="https://baskar-chan.github.io/Sticker.2/" class="button-container">
-      <img src="https://abrehamrahi.ir/o/public/rwEwZJPe/" alt="دکمه دوم" class="image-button">
+      <img src="https://abrehamrahi.ir/o/public/rwEwZJPe/" alt="دکمه دوم" class="image-button" 
+           oncontextmenu="return false;" ondragstart="return false;">
     </a>
   </div>
 
@@ -116,6 +141,18 @@
     // Update clock immediately and then every second
     updateClock();
     setInterval(updateClock, 1000);
+
+    // جلوگیری از کلیک راست روی صفحه
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // جلوگیری از کشیدن و رها کردن
+    document.addEventListener('dragstart', function(e) {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+      }
+    });
   </script>
 </body>
 </html>
